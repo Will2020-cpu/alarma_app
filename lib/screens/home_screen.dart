@@ -1,6 +1,6 @@
+import 'package:count_app/screens/add_alarm_scren.dart';
 import 'package:flutter/material.dart';
 
-import '../models/alarm.dart';
 import '../widgets/alarm_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -23,7 +23,10 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // TODO: Mas tarde investigaremos como abrir un modal para agregar una alarma
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddAlarmScreen()),
+          );
         },
         tooltip: 'Agregar alarma',
         child: const Icon(Icons.add),
