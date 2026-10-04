@@ -1,9 +1,13 @@
 class Alarm {
   final int id;
-  final DateTime time;
-  final bool enabled;
+  final int hour;
+  final int minute;
+  bool enabled;
 
-  Alarm({required this.id, required this.time, this.enabled = true});
-
-  bool get isActive => enabled;
+  Alarm({
+    required this.id,
+    this.enabled = true,
+    required this.hour,
+    required this.minute,
+  });
 }
