@@ -4,4 +4,6 @@ class Alarm {
   final bool enabled;
 
   Alarm({required this.id, required this.time, this.enabled = true});
+
+  bool get isActive => enabled;
 }
