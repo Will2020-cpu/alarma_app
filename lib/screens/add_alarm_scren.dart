@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../models/alarm.dart';
+
 class AddAlarmScreen extends StatefulWidget {
   const AddAlarmScreen({super.key});
 
@@ -23,32 +25,41 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
     }
   }
 
+  void saveAlarm() {
+    final alarm = Alarm(
+      id: DateTime.now().millisecondsSinceEpoch,
+      hour: selectedTime.hour,
+      minute: selectedTime.minute,
+    );
+
+    Navigator.pop(context, alarm);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Nueva alarma")),
+      appBar: AppBar(title: const Text('Nueva alarma')),
+
       body: Padding(
         padding: const EdgeInsets.all(24),
+
         child: Column(
           children: [
             Text(
               selectedTime.format(context),
               style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
             ),
+
             const SizedBox(height: 24),
+
             ElevatedButton(
               onPressed: selectTime,
-              child: const Text("Seleccionar Hora"),
+              child: const Text('Seleccionar hora'),
             ),
 
             const SizedBox(height: 24),
 
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text("Guardar"),
-            ),
+            ElevatedButton(onPressed: saveAlarm, child: const Text('Guardar')),
           ],
         ),
       ),

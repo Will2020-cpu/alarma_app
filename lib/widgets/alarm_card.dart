@@ -3,32 +3,46 @@ import 'package:flutter/material.dart';
 import '../models/alarm.dart';
 
 class AlarmCard extends StatelessWidget {
-  final String time;
-  final String days;
-  final bool enabled;
+  final Alarm alarm;
+  final ValueChanged<bool> onChanged;
+  final VoidCallback onDelete;
 
   const AlarmCard({
     super.key,
-    required this.time,
-    required this.days,
-    required this.enabled,
+    required this.alarm,
+    required this.onChanged,
+    required this.onDelete,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-        title: Text(
-          time,
-          style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-        ),
-        subtitle: Text(days, style: const TextStyle(fontSize: 16)),
-        trailing: Switch(
-          value: enabled,
-          onChanged: (value) {
-            // TODO: Mas tarde revisaremos el estado del boton
-          },
+    return Dismissible(
+      key: ValueKey(alarm.id),
+
+      direction: DismissDirection.endToStart,
+
+      background: Container(
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.only(right: 20),
+        child: const Icon(Icons.delete, size: 30),
+      ),
+
+      onDismissed: (direction) {
+        onDelete();
+      },
+
+      child: Card(
+        child: ListTile(
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 8,
+          ),
+          title: Text(
+            '${alarm.hour.toString().padLeft(2, '0')}:'
+            '${alarm.minute.toString().padLeft(2, '0')}',
+            style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+          ),
+          trailing: Switch(value: alarm.enabled, onChanged: onChanged),
         ),
       ),
     );
