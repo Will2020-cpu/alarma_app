@@ -6,12 +6,14 @@ class AlarmCard extends StatelessWidget {
   final Alarm alarm;
   final ValueChanged<bool> onChanged;
   final VoidCallback onDelete;
+  final VoidCallback onEdit;
 
   const AlarmCard({
     super.key,
     required this.alarm,
     required this.onChanged,
     required this.onDelete,
+    required this.onEdit,
   });
 
   @override
@@ -42,7 +44,21 @@ class AlarmCard extends StatelessWidget {
             '${alarm.minute.toString().padLeft(2, '0')}',
             style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
           ),
-          trailing: Switch(value: alarm.enabled, onChanged: onChanged),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                onPressed: onEdit,
+                tooltip: 'Editar Alarma',
+                icon: const Icon(Icons.edit, color: Colors.tealAccent),
+              ),
+              Switch(
+                value: alarm.enabled,
+                onChanged: onChanged,
+                activeThumbColor: const Color(0xFF00E5FF),
+              ),
+            ],
+          ),
         ),
       ),
     );

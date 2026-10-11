@@ -26,6 +26,22 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> editAlarm(Alarm alarm) async {
+    final Alarm? updatedAlarm = await Navigator.push<Alarm>(
+      context,
+      MaterialPageRoute(builder: (context) => AddAlarmScreen(alarm: alarm)),
+    );
+
+    if (updatedAlarm != null) {
+      setState(() {
+        final index = alarms.indexOf(alarm);
+        if (index != -1) {
+          alarms[index] = updatedAlarm;
+        }
+      });
+    }
+  }
+
   void toggleAlarm(Alarm alarm, bool enabled) {
     setState(() {
       alarm.enabled = enabled;
@@ -59,12 +75,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   onDelete: () {
                     deleteAlarm(alarm);
                   },
+                  onEdit: () {
+                    editAlarm(alarm);
+                  },
                 );
               },
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: addAlarm,
         tooltip: 'Agregar alarma',
+        shape: CircleBorder(
+          side: BorderSide(color: Colors.transparent, width: 2.0),
+        ),
+        backgroundColor: const Color(0xFF00E5FF),
+        foregroundColor: Colors.black,
+        elevation: 10,
         child: const Icon(Icons.add),
       ),
     );
